@@ -1,0 +1,91 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+}
+
+.app-wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    border: 2px solid blue;
+}
+
+.calc-container {
+    display: grid;
+    background-color: lightblue;
+    grid-template-columns: 1fr 1r 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+    gap: 10px;
+    padding: 10px;
+    flex: 1;
+}
+
+.calc-button {
+    border: 2px solid black;
+    background-color: white;
+    border-radius: 10px;
+    font-size: 4em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn7 {
+    grid-area: 1 / 1;
+}
+
+.btn8 {
+    grid-area: 1 / 2;
+}
+
+.btn9 {
+    grid-area: 1 / 3;
+}
+
+.btnAdd  {
+    grid-area: 1 / 4;
+}
+
+.btn4 {
+    grid-area: 2 / 1;
+}
+
+.btn5 {
+    grid-area: 2 / 2;
+}
+
+.btn6 {
+    grid-area: 2 / 3;
+}
+
+.btnSubtract  {
+    grid-area: 2 / 4;
+}
+
+.btn1 {
+    grid-area: 3 / 1;
+}
+
+.btn2 {
+    grid-area: 3 / 2;
+}
+
+.btn3 {
+    grid-area: 3 / 3;
+}
+
+.btnMultiply  {
+    grid-area: 3 / 4;
+}
+
+.btn0 {
+    grid-area: 4 / 1;
+}
+
+.btnEquals {
+    grid-area: 4 / 2 / 5 / 4;
+}
+
+.btnDivide {
+    grid-area: 4 / 4;
+}

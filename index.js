@@ -43,6 +43,7 @@ function clearCalculator() {
     currentOperand = '';
     console.clear();
     displayTextContainer.classList.remove('solved');
+    document.querySelector('.btnDecimal').classList.remove('disabled');
 }
 
 function computeAnswer() {
@@ -57,6 +58,7 @@ function computeAnswer() {
     } else {
         computeArray.pop();
     }
+    document.querySelector('.btnDecimal').classList.remove('disabled');
     currentOperand = '';
     displayText.innerText = operate(computeArray);
     computeArray.splice(0, computeArray.length);
@@ -71,8 +73,15 @@ function addNumber(button) {
         displayText.innerText = '';
         displayTextContainer.classList.remove('solved')
     }
-    displayText.innerText += button.innerText;
-    currentOperand += button.innerText;
+    if (button.innerText === '.') {
+        button.classList.add('disabled');
+    }
+    if (button.innerText === '.' && currentOperand.includes('.')) {
+        return
+    } else {
+        displayText.innerText += button.innerText;
+        currentOperand += button.innerText;
+    }
 }
 
 function addOperator(button) {
@@ -80,6 +89,7 @@ function addOperator(button) {
         displayText.innerText = 'Calculator';
         return;
     }
+    document.querySelector('.btnDecimal').classList.remove('disabled');
     displayText.innerText += button.innerText;
     computeArray.push(currentOperand);
     computeArray.push(button.innerText);
@@ -97,8 +107,6 @@ function flipSign() {
         currentOperand.unshift('-');
         currentOperand = currentOperand.join('');
     }
-    console.log(currentOperand);
-
     displayText.innerText = 
         `${displayText.innerText.slice(
             0, 

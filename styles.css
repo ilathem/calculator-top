@@ -57,6 +57,10 @@
     transition: scale .05s, background-color .1s;
 }
 
+.disabled {
+    background-color: #26282e;
+}
+
 .calc-button:hover {
     background-color: #26282e;
 }

@@ -43,6 +43,9 @@ buttons.forEach(button => {
         } else if (event.target.innerText === '=') {
             computeArray.push(currentOperand);
             currentOperand = '';
+            if (typeof Number(computeArray[computeArray.length - 1]) !== 'number') {
+                computeArray.pop();
+            }
             displayText.innerText = operate(computeArray);
             computeArray.splice(0, computeArray.length);
         } else if (
@@ -52,6 +55,10 @@ buttons.forEach(button => {
             displayText.innerText += button.innerText;
             currentOperand += button.innerText;
         } else {
+            if (currentOperand === '') {
+                displayText.innerText = 'Calculator';
+                return;
+            }
             displayText.innerText += button.innerText;
             computeArray.push(currentOperand);
             computeArray.push(button.innerText);

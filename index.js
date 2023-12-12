@@ -32,6 +32,11 @@ const buttons = document.querySelectorAll(".calc-button")
 const computeArray = [];
 let currentOperand = '';
 
+function displayData() {
+    console.log(`displayText: ${displayText.innerText}
+        computeArray: ${computeArray}`);
+}
+
 function clearCalculator() {
     displayText.innerText = 'Calculator';
     computeArray.splice(0, computeArray.length);
@@ -43,6 +48,7 @@ function clearCalculator() {
 function computeAnswer() {
     if (computeArray.length === 0) {
         displayText.innerText = 'Calculator';
+        clearCalculator();
         return;
     }
     if (currentOperand) {
@@ -80,6 +86,26 @@ function addOperator(button) {
     currentOperand = '';
 }
 
+function flipSign() {
+    const operandLength = currentOperand.length;
+    if (Number(currentOperand) > 0) {
+        currentOperand = currentOperand.split('');
+        currentOperand.unshift('-');
+        currentOperand = currentOperand.join('');
+    } else if (Number(currentOperand) < 0) {
+        currentOperand = currentOperand.split('');
+        currentOperand.unshift('-');
+        currentOperand = currentOperand.join('');
+    }
+    console.log(currentOperand);
+
+    displayText.innerText = 
+        `${displayText.innerText.slice(
+            0, 
+            displayText.innerText.length - operandLength
+        )} (${currentOperand})`;
+}
+
 function handleBtnClick(event) {
     if (displayText.innerText === 'Calculator') {
         displayText.innerText = '';
@@ -93,6 +119,8 @@ function handleBtnClick(event) {
         .includes(event.target.innerText)) 
     {
         addNumber(event.target);
+    } else if (event.target.innerText === '+/-') {
+        flipSign();
     } else {
         addOperator(event.target);
     }

@@ -33,8 +33,8 @@ const computeArray = [];
 let currentOperand = '';
 
 function displayData() {
-    console.log(`displayText: ${displayText.innerText}
-        computeArray: ${computeArray}`);
+    console.log(`displayText: ${displayText.innerText}\ncomputeArray: ${
+        computeArray}\ncurrentOperand: ${currentOperand}`);
 }
 
 function clearCalculator() {
@@ -85,13 +85,13 @@ function addNumber(button) {
 }
 
 function addOperator(button) {
-    if (currentOperand === '') {
+    if (computeArray.length === 0 && !currentOperand) {
         displayText.innerText = 'Calculator';
         return;
     }
     document.querySelector('.btnDecimal').classList.remove('disabled');
     displayText.innerText += button.innerText;
-    computeArray.push(currentOperand);
+    currentOperand && computeArray.push(currentOperand);
     computeArray.push(button.innerText);
     currentOperand = '';
 }
@@ -114,7 +114,21 @@ function flipSign() {
         )} (${currentOperand})`;
 }
 
+function backspace() {
+    displayData();   
+    if (currentOperand) { // there is a number in progress
+        currentOperand = currentOperand.slice(0, currentOperand.length - 1);
+        displayText.innerText = displayText.innerText.slice(0, displayText.innerText.length - 1);
+    } else { // last thing is an operator
+        computeArray.pop()
+        displayText.innerText = displayText.innerText.slice(0, displayText.innerText.length - 1);
+    }
+    displayData();   
+}
+
 function handleBtnClick(event) {
+    console.log('before:');
+    displayData();
     if (displayText.innerText === 'Calculator') {
         displayText.innerText = '';
     }
@@ -129,9 +143,14 @@ function handleBtnClick(event) {
         addNumber(event.target);
     } else if (event.target.innerText === '+/-') {
         flipSign();
+    } else if (event.target.innerText === '⌫') {
+        backspace();
     } else {
         addOperator(event.target);
     }
+    console.log('after:');
+    displayData();
+    console.log('----------------------------------');
 }
 
 for(const button of buttons) {

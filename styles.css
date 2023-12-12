@@ -28,6 +28,7 @@
     border: 2px solid white;
     border-radius: 20px;
     margin: 2em;
+    transition: border .5s;
 }
 
 .text {
@@ -126,4 +127,8 @@
 
 .btnDivide {
     grid-area: 4 / 4;
+}
+
+.solved {
+    border: 2px solid green;
 }

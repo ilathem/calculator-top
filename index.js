@@ -61,6 +61,9 @@ buttons.forEach(button => {
             displayText.innerText = operate(computeArray);
             computeArray.splice(0, computeArray.length);
             displayTextContainer.classList.add('solved');
+            if (displayText.innerText === 'Infinity') {
+                displayText.innerText = 'You fool!';
+            }
         } else if (
             ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
             .includes(event.target.innerText)) 

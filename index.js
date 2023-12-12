@@ -19,7 +19,12 @@ function operate(arrInput) {
             }
         }
     }
-    return Number(arrInput[0]).toFixed(3);
+    console.log(arrInput[0].split("."))
+    if (arrInput[0].split(".")[1] && arrInput[0].split(".")[1].length > 3) {
+        return Number(arrInput[0]).toFixed(3);
+    } else {
+        return Number(arrInput[0]);
+    }
 }
 
 const displayText = document.querySelector('#text');
@@ -42,11 +47,17 @@ buttons.forEach(button => {
             console.clear();
             displayTextContainer.classList.remove('solved');
         } else if (event.target.innerText === '=') {
-            computeArray.push(currentOperand);
-            currentOperand = '';
-            if (typeof Number(computeArray[computeArray.length - 1]) !== 'number') {
+            if (computeArray.length === 0) {
+                displayText.innerText = 'Calculator';
+                return;
+            }
+            if (currentOperand) {
+                computeArray.push(currentOperand);
+                currentOperand = '';
+            } else {
                 computeArray.pop();
             }
+            currentOperand = '';
             displayText.innerText = operate(computeArray);
             computeArray.splice(0, computeArray.length);
             displayTextContainer.classList.add('solved');

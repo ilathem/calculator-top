@@ -19,7 +19,7 @@ function operate(arrInput) {
             }
         }
     }
-    return arrInput[0];
+    return Number(arrInput[0]).toFixed(3);
 }
 
 const displayText = document.querySelector('#text');

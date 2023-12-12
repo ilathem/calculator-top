@@ -53,6 +53,15 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    transition: scale .05s, background-color .1s;
+}
+
+.calc-button:hover {
+    background-color: #26282e;
+}
+
+.calc-button:active {
+    scale: .9;
 }
 
 .btn7 {

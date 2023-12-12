@@ -17,7 +17,9 @@
 
 .text-wrapper {
     display: flex;
-    justify-content: center;
+    justify-content: center; 
+    align-items: center;
+    margin: 2em 0;
 }
 
 .text-container {
@@ -27,8 +29,8 @@
     padding: 2em 4em;
     border: 2px solid white;
     border-radius: 20px;
-    margin: 2em;
     transition: border .5s;
+    height: 100%;
 }
 
 .text {
@@ -67,6 +69,10 @@
 
 .calc-button:active {
     scale: .9;
+}
+
+.btnBackspace {
+    grid-area: 1 / 2;
 }
 
 .btn7 {
@@ -118,7 +124,7 @@
 }
 
 .btn0 {
-    grid-area: 5 / 1 / 6 / 3;
+    grid-area: 5 / 1;
 }
 
 .btnEquals {
@@ -134,7 +140,7 @@
 }
 
 .btnSign {
-    grid-area: 1 / 2;
+    grid-area: 5 / 2;
 }
 
 .btnModulo {

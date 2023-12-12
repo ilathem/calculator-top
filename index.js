@@ -116,12 +116,22 @@ function flipSign() {
 
 function backspace() {
     displayData();   
+    displayText.innerText = displayText.innerText.slice(0, displayText.innerText.length - 1);
     if (currentOperand) { // there is a number in progress
         currentOperand = currentOperand.slice(0, currentOperand.length - 1);
-        displayText.innerText = displayText.innerText.slice(0, displayText.innerText.length - 1);
     } else { // last thing is an operator
-        computeArray.pop()
-        displayText.innerText = displayText.innerText.slice(0, displayText.innerText.length - 1);
+        computeArray.pop();
+        currentOperand = computeArray[computeArray.length - 1];
+        computeArray.pop();
+    }
+    if (displayText.innerText === '') {
+        clearCalculator()
+    } else {
+        if (currentOperand.includes('.')) {
+            document.querySelector('.btnDecimal').classList.add('disabled');
+        } else {
+            document.querySelector('.btnDecimal').classList.remove('disabled');
+        }
     }
     displayData();   
 }

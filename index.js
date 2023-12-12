@@ -5,22 +5,20 @@ const calculatorLogic = {
     '/': (a, b) => Number(a) / Number(b),
 }
 
-function operate(strInput) {
-    console.log(strInput);
-    const arrInput = strInput.split('')
+function operate(arrInput) {
     const precedence = [
         ['*', "/"],
         ["+", "-"],
     ]
     for (const operators of precedence) {
-        console.log(arrInput.join(''));
-        arrInput.forEach((value, index, array) => {
-            if (operators.includes(value)) {
-                const result = calculatorLogic[value](array[index - 1], array[index + 1]);
-                console.log(`${array[index - 1]} ${value} ${array[index + 1]} = ${result}`)
-                arrInput.splice(index - 1, 3, result);
+        console.log(arrInput);
+        for (let index = 0; index < arrInput.length; index++) {
+            if (operators.includes(arrInput[index])) {
+                const result = calculatorLogic[arrInput[index]](arrInput[index - 1], arrInput[index + 1]);
+                arrInput.splice(index - 1, 3, String(result));
+                index -= 2; // bc we removed 2 elements
             }
-        })
+        }
     }
     return arrInput[0];
 }
@@ -29,6 +27,9 @@ const displayText = document.querySelector('#text');
 
 const buttons = document.querySelectorAll(".calc-button")
 
+const computeArray = [];
+let currentOperand = '';
+
 buttons.forEach(button => {
     button.addEventListener('click', (event) => {
         if (displayText.innerText === 'Calculator') {
@@ -36,11 +37,25 @@ buttons.forEach(button => {
         }
         if (event.target.innerText === 'Clear') {
             displayText.innerText = 'Calculator';
+            computeArray.splice(0, computeArray.length);
+            currentOperand = '';
             console.clear();
         } else if (event.target.innerText === '=') {
-            displayText.innerText = operate(displayText.innerText);
+            computeArray.push(currentOperand);
+            currentOperand = '';
+            displayText.innerText = operate(computeArray);
+            computeArray.splice(0, computeArray.length);
+        } else if (
+            ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+            .includes(event.target.innerText)) 
+        {
+            displayText.innerText += button.innerText;
+            currentOperand += button.innerText;
         } else {
             displayText.innerText += button.innerText;
+            computeArray.push(currentOperand);
+            computeArray.push(button.innerText);
+            currentOperand = '';
         }
     })
 })

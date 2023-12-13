@@ -98,6 +98,7 @@ function addOperator(button) {
 
 function flipSign() {
     const operandLength = currentOperand.length;
+    if (!currentOperand) return;
     if (Number(currentOperand) > 0) {
         currentOperand = currentOperand.split('');
         currentOperand.unshift('-');

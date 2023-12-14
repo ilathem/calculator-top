@@ -3,11 +3,12 @@ const calculatorLogic = {
     '-': (a, b) => Number(a) - Number(b),
     '×': (a, b) => Number(a) * Number(b),
     '÷': (a, b) => Number(a) / Number(b),
+    '%': (a, b) => Number(a) % Number(b),
 }
 
 function operate(arrInput) {
     const precedence = [
-        ['×', "÷"],
+        ['×', "÷", "%"],
         ["+", "-"],
     ]
     for (const operators of precedence) {

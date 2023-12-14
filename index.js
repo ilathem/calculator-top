@@ -165,6 +165,23 @@ function handleBtnClick(event) {
     console.log('----------------------------------');
 }
 
+function handleKey(event) {
+    console.log(event.key);
+    if (['0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+        '%', '/', '*', '-', '+', '='].includes(event.key)
+    ) {
+        handleBtnClick(event.key);
+    } else if (event.key === 'backspace') {
+        handleBtnClick('⌫');
+    } else if (event.key === 'c') {
+        handleBtnClick('C');
+    } else if (event.key === 's') {
+        handleBtnClick('+/-');
+    }
+}
+
+document.querySelector('body').addEventListener('onkeyup', e => handleKey(e));
+
 for(const button of buttons) {
     button.addEventListener('click', (event) => handleBtnClick(event));
 }

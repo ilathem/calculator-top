@@ -190,22 +190,90 @@ function handleKey(event) {
     console.log(event.key);
     if (event.key === '/') {
         handleBtnClick('÷');
+        triggerBtnUp('btnDivide');
     } else if (event.key === '*') {
         handleBtnClick('×');
-    } else if (['0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
-        '%', '-', '+', '='].includes(event.key)
+        triggerBtnUp('btnMultiply');
+    } else if (event.key === '.') {
+        handleBtnClick('.');
+        triggerBtnUp('btnDecimal');
+    } else if (event.key === '=') {
+        triggerBtnUp('btnEquals');
+        handleBtnClick('=');
+    } else if (event.key === '+') {
+        triggerBtnUp('btnAdd');
+        handleBtnClick('+');
+    } else if (event.key === '-') {
+        triggerBtnUp('btnSubtract');
+        handleBtnClick('-');
+    } else if (event.key === '%') {
+        triggerBtnUp('btnModulo');
+        handleBtnClick('%');
+    } else if (['0', '1', '2', '3', '4', '5', '6', '7', '8', '9',]
+        .includes(event.key)
     ) {
         handleBtnClick(event.key);
+        triggerBtnUp(`btn${event.key}`);
     } else if (event.key === 'Backspace') {
         handleBtnClick('⌫');
+        triggerBtnUp('btnBackspace');
     } else if (event.key === 'c') {
         handleBtnClick('C');
+        triggerBtnUp('btnClear');
     } else if (event.key === 's') {
         handleBtnClick('+/-');
+        triggerBtnUp('btnSign');
     } else if (event.key === 'Enter') {
         handleBtnClick('=');
+        triggerBtnUp('btnEquals');
     }
 }
+
+function triggerBtnDown(btnClass) {
+    document.querySelector(`.${btnClass}`).classList.remove('btnAnimateUp');
+    document.querySelector(`.${btnClass}`).classList.add('btnAnimateDown');
+    setTimeout(() => { // in case the button gets "stuck"
+        document.querySelector(`.${btnClass}`).classList.remove('btnAnimateDown');
+        document.querySelector(`.${btnClass}`).classList.add('btnAnimateUp');
+    }, 1000)
+}
+
+function triggerBtnUp(btnClass) {
+    document.querySelector(`.${btnClass}`).classList.remove('btnAnimateDown');
+    document.querySelector(`.${btnClass}`).classList.add('btnAnimateUp');
+}
+
+function handleKeyDown(event) {
+    if (event.key === '/') {
+        triggerBtnDown('btnDivide');
+    } else if (event.key === '*') {
+        triggerBtnDown('btnMultiply');
+    } else if (event.key === '.') {
+        triggerBtnDown('btnDecimal');
+    } else if (event.key === '=') {
+        triggerBtnDown('btnEquals');
+    } else if (event.key === '+') {
+        triggerBtnDown('btnAdd');
+    } else if (event.key === '-') {
+        triggerBtnDown('btnSubtract');
+    } else if (event.key === '%') {
+        triggerBtnDown('btnModulo');
+    } else if (['0', '1', '2', '3', '4', '5', '6', '7', '8', '9',]
+        .includes(event.key)
+    ) {
+        triggerBtnDown(`btn${event.key}`);
+    } else if (event.key === 'Backspace') {
+        triggerBtnDown('btnBackspace');
+    } else if (event.key === 'c') {
+        triggerBtnDown('btnClear');
+    } else if (event.key === 's') {
+        triggerBtnDown('btnSign');
+    } else if (event.key === 'Enter') {
+        triggerBtnDown('btnEquals');
+    }
+}
+
+document.addEventListener('keydown', e => handleKeyDown(e));
 
 document.addEventListener('keyup', e => handleKey(e));
 

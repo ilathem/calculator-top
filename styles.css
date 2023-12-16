@@ -59,6 +59,28 @@
     transition: scale .05s, background-color .1s;
 }
 
+.btnAnimateDown {
+    animation-name: btnAnimateDown;
+    animation-duration: .2s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes btnAnimateDown {
+    0% {scale: 1;}
+    100% {scale: .9;}
+}
+
+.btnAnimateUp {
+    animation-name: btnAnimateUp;
+    animation-duration: .2s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes btnAnimateUp {
+    0% {scale: .9;}
+    100% {scale: 1;}
+}
+
 .disabled {
     background-color: #26282e;
 }

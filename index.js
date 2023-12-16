@@ -98,8 +98,8 @@ function addOperator(text) {
 }
 
 function flipSign() {
-    console.log(`currentOperandBefore: ${currentOperand}`);
-    console.log(`operandLength: ${currentOperand.length}`);
+    // console.log(`currentOperandBefore: ${currentOperand}`);
+    // console.log(`operandLength: ${currentOperand.length}`);
     const operandLength = currentOperand.length;
     if (!currentOperand) return;
     if (Number(currentOperand) > 0) {
@@ -121,8 +121,8 @@ function flipSign() {
                 displayText.innerText.length - operandLength - 2
             )}${currentOperand}`;
     }
-    console.log(`currentOperandAfter: ${currentOperand}`);
-    console.log(`operandLength: ${currentOperand.length}`);
+    // console.log(`currentOperandAfter: ${currentOperand}`);
+    // console.log(`operandLength: ${currentOperand.length}`);
 }
 
 function backspace() {
@@ -187,7 +187,7 @@ function handleBtnClick(text) {
 
 function handleKey(event) {
     event.preventDefault();
-    console.log(event.key);
+    // console.log(event.key);
     if (event.key === '/') {
         handleBtnClick('÷');
         triggerBtnUp('btnDivide');

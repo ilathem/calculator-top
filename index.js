@@ -69,58 +69,78 @@ function computeAnswer() {
     }
 }
 
-function addNumber(button) {
+function addNumber(text) {
     if (displayTextContainer.classList.contains('solved')) {
         displayText.innerText = '';
         displayTextContainer.classList.remove('solved')
     }
-    if (button.innerText === '.') {
-        button.classList.add('disabled');
+    if (text === '.') {
+        document.querySelector('.btnDecimal').classList.add('disabled');
     }
-    if (button.innerText === '.' && currentOperand.includes('.')) {
+    if (text === '.' && currentOperand.includes('.')) {
         return
     } else {
-        displayText.innerText += button.innerText;
-        currentOperand += button.innerText;
+        displayText.innerText += text;
+        currentOperand += text;
     }
 }
 
-function addOperator(button) {
+function addOperator(text) {
     if (computeArray.length === 0 && !currentOperand) {
         displayText.innerText = 'Calculator';
         return;
     }
     document.querySelector('.btnDecimal').classList.remove('disabled');
-    displayText.innerText += button.innerText;
+    displayText.innerText += text;
     currentOperand && computeArray.push(currentOperand);
-    computeArray.push(button.innerText);
+    computeArray.push(text);
     currentOperand = '';
 }
 
 function flipSign() {
+    console.log(`currentOperandBefore: ${currentOperand}`);
+    console.log(`operandLength: ${currentOperand.length}`);
     const operandLength = currentOperand.length;
     if (!currentOperand) return;
     if (Number(currentOperand) > 0) {
         currentOperand = currentOperand.split('');
         currentOperand.unshift('-');
         currentOperand = currentOperand.join('');
+        displayText.innerText = 
+            `${displayText.innerText.slice(
+                0, 
+                displayText.innerText.length - operandLength
+            )}(${currentOperand})`;
     } else if (Number(currentOperand) < 0) {
         currentOperand = currentOperand.split('');
-        currentOperand.unshift('-');
+        currentOperand.shift();
         currentOperand = currentOperand.join('');
+        displayText.innerText = 
+            `${displayText.innerText.slice(
+                0,
+                displayText.innerText.length - operandLength - 2
+            )}${currentOperand}`;
     }
-    displayText.innerText = 
-        `${displayText.innerText.slice(
-            0, 
-            displayText.innerText.length - operandLength
-        )} (${currentOperand})`;
+    console.log(`currentOperandAfter: ${currentOperand}`);
+    console.log(`operandLength: ${currentOperand.length}`);
 }
 
 function backspace() {
     displayData();   
     displayText.innerText = displayText.innerText.slice(0, displayText.innerText.length - 1);
     if (currentOperand) { // there is a number in progress
-        currentOperand = currentOperand.slice(0, currentOperand.length - 1);
+        // number is the last negative digit -- remove parentheses and sign
+        if (currentOperand[0] === '-' &&
+            currentOperand.length === 2) {
+            displayText.innerText = 
+                `${displayText.innerText.slice(
+                    0,
+                    displayText.innerText.length - 3
+                )}`;
+            currentOperand = '';
+        } else {
+            currentOperand = currentOperand.slice(0, currentOperand.length - 1);
+        }
     } else { // last thing is an operator
         computeArray.pop();
         currentOperand = computeArray[computeArray.length - 1];
@@ -138,50 +158,57 @@ function backspace() {
     displayData();   
 }
 
-function handleBtnClick(event) {
-    console.log('before:');
-    displayData();
+function handleBtnClick(text) {
+    // console.log('before:');
+    // displayData();
     if (displayText.innerText === 'Calculator') {
         displayText.innerText = '';
     }
-    if (event.target.innerText === 'C') {
+    if (text === 'C') {
         clearCalculator();
-    } else if (event.target.innerText === '=') {
+    } else if (text === '=') {
         computeAnswer();
     } else if (
         ['.', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
-        .includes(event.target.innerText)) 
+        .includes(text)) 
     {
-        addNumber(event.target);
-    } else if (event.target.innerText === '+/-') {
+        addNumber(text);
+    } else if (text === '+/-') {
         flipSign();
-    } else if (event.target.innerText === '⌫') {
+    } else if (text === '⌫') {
         backspace();
     } else {
-        addOperator(event.target);
+        addOperator(text);
     }
-    console.log('after:');
-    displayData();
-    console.log('----------------------------------');
+    // console.log('after:');
+    // displayData();
+    // console.log('----------------------------------');
 }
 
 function handleKey(event) {
+    event.preventDefault();
     console.log(event.key);
-    if (['0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
-        '%', '/', '*', '-', '+', '='].includes(event.key)
+    if (event.key === '/') {
+        handleBtnClick('÷');
+    } else if (event.key === '*') {
+        handleBtnClick('×');
+    } else if (['0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+        '%', '-', '+', '='].includes(event.key)
     ) {
         handleBtnClick(event.key);
-    } else if (event.key === 'backspace') {
+    } else if (event.key === 'Backspace') {
         handleBtnClick('⌫');
     } else if (event.key === 'c') {
         handleBtnClick('C');
     } else if (event.key === 's') {
         handleBtnClick('+/-');
+    } else if (event.key === 'Enter') {
+        handleBtnClick('=');
     }
 }
 
-document.querySelector('body').addEventListener('onkeyup', e => handleKey(e));
+document.addEventListener('keyup', e => handleKey(e));
 
 for(const button of buttons) {
-    button.addEventListener('click', (event) => handleBtnClick(event));
+    button.addEventListener('click', (event) => handleBtnClick(event.target.innerText));
 }
